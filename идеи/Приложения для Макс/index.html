@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Внутренний документ: Матрешка</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+        });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #111827; }
+        .nav-item.active { color: #000; font-weight: 700; border-left: 2px solid #000; background-color: #f9fafb; }
+        .data-card { border: 1px solid #e5e7eb; border-radius: 6px; transition: border-color 0.2s; }
+        .data-card:hover { border-color: #000; }
+        .tab-btn.active { border-bottom: 2px solid #000; color: #000; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+<nav class="w-64 border-r border-gray-200 flex-col hidden lg:flex bg-gray-50/30">
+    <div class="p-8 pb-4">
+        <h1 class="text-xs font-black tracking-widest uppercase mb-1">Матрешка</h1>
+        <p class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Стратегия</p>
+    </div>
+    <div class="flex-1 overflow-y-auto px-4 py-4" id="desktop-nav">
+        <!-- JS dynamic render -->
+    </div>
+    <div class="p-6 border-t border-gray-200">
+        <a href="https://max.ru/" target="_blank" class="text-[10px] text-gray-400 hover:text-black transition uppercase font-bold tracking-tight">Platform: Max.ru</a>
+    </div>
+</nav>
+
+<div class="flex-1 flex flex-col h-screen overflow-hidden">
+    <header class="lg:hidden border-b border-gray-200 p-4 flex justify-between items-center">
+        <h1 class="text-xs font-black uppercase tracking-widest">Матрешка</h1>
+        <button id="mobile-menu-btn" class="text-xl">≡</button>
+    </header>
+
+    <div id="mobile-menu" class="hidden absolute top-[53px] left-0 w-full bg-white border-b border-gray-200 z-50 p-4 shadow-xl"></div>
+
+    <main class="flex-1 overflow-y-auto p-6 lg:p-16">
+        <div class="max-w-4xl mx-auto">
+            <div id="stage-content">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const stagesData = [
+        {
+            id: 1,
+            title: "Концепция проекта",
+            content: `
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold mb-4">Кликер в мессенджере Max</h3>
+                    <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+                        Запускаем виральную мини-игру. Вся суть в локальном патриотизме. Пользователь тапает матрешку, копит очки себе и параллельно двигает свой родной город в глобальном рейтинге.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="data-card p-5 border-l-2 border-black">
+                            <h4 class="text-xs font-bold uppercase mb-2 text-black">Механика</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed">Простой кликер с энергией. Больше тапаешь, круче выглядит матрешка от простой деревянной до золотой.</p>
+                        </div>
+                        <div class="data-card p-5 border-l-2 border-black">
+                            <h4 class="text-xs font-bold uppercase mb-2 text-black">Социальность</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed">Держим живой рейтинг городов. Видишь отставание своего региона и кидаешь ссылку землякам в чат.</p>
+                        </div>
+                        <div class="data-card p-5 border-l-2 border-black">
+                            <h4 class="text-xs font-bold uppercase mb-2 text-black">Платформа</h4>
+                            <p class="text-xs text-gray-500 leading-relaxed">Работаем как Mini App внутри Max. Интеграция с профилем вытягивает регион сама, руками ничего вводить не надо.</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            onRender: () => {}
+        },
+        {
+            id: 2,
+            title: "Нативная интеграция с Max",
+            content: `
+                <div class="space-y-6">
+                    <div class="data-card p-6 border-l-4 border-black">
+                        <h4 class="text-xs font-bold uppercase mb-4">В чем фишка</h4>
+                        <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                            Обычные браузерки заставляют людей логиниться. Мы стучимся в Max Profile API и сразу забираем ID с регионом пользователя. Конверсия не режется на этапе входа. Человек кликает по ссылке в диалоге и уже в игре. Это должно сильно снизить стоимость привлечения юзеров.
+                        </p>
+                        <div class="p-4 bg-gray-50 rounded font-mono text-[11px] text-gray-700 border border-gray-100 mb-4">
+                            // Вытягиваем регион автоматом<br>
+                            const maxUser = await MaxMessenger.getProfile();<br>
+                            const userRegion = maxUser.location.region_id;<br>
+                            const authSession = await Backend.auth(maxUser.token);
+                        </div>
+                        <ul class="text-xs text-gray-500 space-y-3">
+                            <li>• Зашел по ссылке и сразу тапаешь за свой город.</li>
+                            <li>• Минимальный отвал пользователей на старте.</li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            onRender: () => {}
+        },
+        {
+            id: 3,
+            title: "Сценарии и Виральность",
+            content: `
+                <div class="space-y-6">
+                    <div class="border border-gray-200 rounded">
+                        <div class="flex flex-wrap border-b border-gray-200 bg-gray-50">
+                            <button class="tab-btn px-6 py-3 text-xs font-bold active" data-target="jtbd">Мотивация</button>
+                            <button class="tab-btn px-6 py-3 text-xs font-bold" data-target="viral">Виральность</button>
+                            <button class="tab-btn px-6 py-3 text-xs font-bold" data-target="usecases">Кейсы</button>
+                        </div>
+                        <div id="tab-content-area" class="p-6 text-sm leading-relaxed">
+                            <div id="jtbd" class="space-y-4">
+                                <div class="p-4 bg-gray-50 rounded border border-gray-100 hover:border-black transition">
+                                    <span class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Локальный чат</span>
+                                    Сижу в чате Самары в Max. Бот пишет, что Казань обходит нас на 50к очков. Захожу потапать минут пять, чтобы помочь своим вытащить рейтинг.
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded border border-gray-100 hover:border-black transition">
+                                    <span class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Убийство времени</span>
+                                    Еду в метро или сижу на скучной паре. Хочется занять руки. Открываю Матрешку, сливаю энергию под приятную анимацию.
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded border border-gray-100 hover:border-black transition">
+                                    <span class="block text-[10px] uppercase font-bold text-gray-400 mb-1">Выпендреж</span>
+                                    Пишу друзьям в личку. Скидываю скрин золотой матрешки, чисто забайтить их зайти и попробовать догнать меня.
+                                </div>
+                            </div>
+                            <div id="viral" class="hidden space-y-4">
+                                <div class="p-4 bg-gray-50 rounded border border-gray-100">
+                                    <h4 class="font-bold text-xs uppercase mb-2">Инвайт</h4>
+                                    <p class="text-xs text-gray-600">Кидаешь ссылку другу. Оба лутаете по 5000 очков на баланс города и получаете полную энергию.</p>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded border border-gray-100">
+                                    <h4 class="font-bold text-xs uppercase mb-2">Защита города</h4>
+                                    <p class="text-xs text-gray-600">Город падает в топе, вылезает кнопка позвать местных. Ссылка летит в паблики. Если зашло 10 человек, всему городу врубается буст x1.5 на полчаса.</p>
+                                </div>
+                                <div class="p-4 bg-gray-50 rounded border border-gray-100">
+                                    <h4 class="font-bold text-xs uppercase mb-2">Ачивки</h4>
+                                    <p class="text-xs text-gray-600">Взял новый уровень матрешки, игра предлагает закинуть статус в историю Max.</p>
+                                </div>
+                            </div>
+                            <div id="usecases" class="hidden space-y-4">
+                                <div class="p-4 border-l-2 border-black bg-gray-50">
+                                    <h4 class="font-bold text-xs uppercase mb-1">Энергия</h4>
+                                    <p class="text-xs text-gray-600">Бесконечно тапать нельзя. Лимит восстанавливается со временем. Нам нужно чтобы люди заходили часто и ненадолго, так мы удержим онлайн.</p>
+                                </div>
+                                <div class="p-4 border-l-2 border-black bg-gray-50">
+                                    <h4 class="font-bold text-xs uppercase mb-1">Офлайн режим</h4>
+                                    <p class="text-xs text-gray-600">Инет отвалился, но мы не блочим экран. Тапы висят в локальном хранилище. Появилась сеть, отправляем пакет на сервак с отметкой времени.</p>
+                                </div>
+                                <div class="p-4 border-l-2 border-black bg-gray-50">
+                                    <h4 class="font-bold text-xs uppercase mb-1">Баланс</h4>
+                                    <p class="text-xs text-gray-600">Москва порвет всех числом. Будем считать очки с коэффициентом населения. Мелкие города должны честно биться с миллионниками.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            onRender: () => {
+                const btns = document.querySelectorAll('.tab-btn');
+                btns.forEach(btn => btn.addEventListener('click', () => {
+                    btns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const target = btn.dataset.target;
+                    ['jtbd', 'viral', 'usecases'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.classList.toggle('hidden', id !== target);
+                    });
+                }));
+            }
+        },
+        {
+            id: 4,
+            title: "Архитектура MVP",
+            content: `
+                <div class="space-y-8">
+                    <div class="data-card p-6 bg-white border border-gray-200 rounded">
+                        <h4 class="text-[10px] font-black uppercase text-gray-400 mb-6 tracking-widest text-center">Схема системы</h4>
+                        <div class="mermaid flex justify-center text-sm w-full overflow-x-auto">
+                            graph LR
+                                classDef default fill:#f9fafb,stroke:#e5e7eb,stroke-width:1px,color:#111827;
+                                classDef client fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000,font-weight:bold;
+                                classDef max fill:#000000,stroke:#000000,stroke-width:2px,color:#ffffff,font-weight:bold;
+                                classDef db fill:#f3f4f6,stroke:#d1d5db,stroke-width:1px,color:#111827;
+
+                                Client("Фронтенд"):::client
+                                Max{"Max API"}:::max
+                                
+                                subgraph Backend
+                                    Gate["Шлюз"]
+                                    Core["Движок"]
+                                    Redis[("Redis")]:::db
+                                    DB[("База")]:::db
+                                end
+
+                                Client --> Gate
+                                Max -.-> Gate
+                                Gate --> Core
+                                Core --> Redis
+                                Core --> DB
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-sm text-gray-600 mb-4">Разбили работу на 4 куска для параллельного запуска.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="data-card p-5 hover:border-black transition">
+                                <h5 class="text-[11px] font-black uppercase text-gray-800 mb-3 border-b border-gray-100 pb-2">Backend Core</h5>
+                                <ul class="text-xs space-y-2 text-gray-600">
+                                    <li>Апишка принимает пачки тапов раз в пару секунд.</li>
+                                    <li>Redis держит рейтинг городов онлайн.</li>
+                                    <li>В базе храним балансы пользователей.</li>
+                                </ul>
+                            </div>
+
+                            <div class="data-card p-5 hover:border-black transition">
+                                <h5 class="text-[11px] font-black uppercase text-gray-800 mb-3 border-b border-gray-100 pb-2">Security</h5>
+                                <ul class="text-xs space-y-2 text-gray-600">
+                                    <li>Проверяем сессии от платформы Max.</li>
+                                    <li>Режем автокликеры и лимитим частоту запросов.</li>
+                                </ul>
+                            </div>
+
+                            <div class="data-card p-5 hover:border-black transition">
+                                <h5 class="text-[11px] font-black uppercase text-gray-800 mb-3 border-b border-gray-100 pb-2">Frontend</h5>
+                                <ul class="text-xs space-y-2 text-gray-600">
+                                    <li>Обертка под Mini App.</li>
+                                    <li>Анимация клика и отрисовка матрешки.</li>
+                                    <li>Главный экран, рейтинг и задания.</li>
+                                </ul>
+                            </div>
+
+                            <div class="data-card p-5 hover:border-black transition">
+                                <h5 class="text-[11px] font-black uppercase text-gray-800 mb-3 border-b border-gray-100 pb-2">Game Logic</h5>
+                                <ul class="text-xs space-y-2 text-gray-600">
+                                    <li>Локальный стейт энергии.</li>
+                                    <li>Алгоритм нормализации очков для баланса регионов.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            onRender: () => {
+                setTimeout(() => {
+                    try {
+                        if (window.mermaid) {
+                            mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+                        }
+                    } catch (e) {
+                        // ignore
+                    }
+                }, 50);
+            }
+        },
+        {
+            id: 5,
+            title: "Приоритизация",
+            content: `
+                <div class="space-y-6">
+                    <p class="text-sm text-gray-600">Что берем в работу сейчас, а что откладываем.</p>
+                    
+                    <div class="grid gap-3">
+                        <div class="flex items-center gap-4 p-4 data-card bg-white border-l-4 border-l-red-500">
+                            <span class="text-sm font-bold text-gray-900 flex-1">Сам кликер и таймер энергии</span>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 data-card bg-white border-l-4 border-l-red-500">
+                            <span class="text-sm font-bold text-gray-900 flex-1">Онлайн рейтинг городов</span>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 data-card bg-white border-l-4 border-l-red-500">
+                            <span class="text-sm font-bold text-gray-900 flex-1">Привязка к Max Profile API</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 p-4 data-card bg-white mt-4 border-l-4 border-l-yellow-400">
+                            <span class="text-sm font-bold text-gray-800 flex-1">Инвайты в чаты</span>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 data-card bg-white border-l-4 border-l-yellow-400">
+                            <span class="text-sm font-bold text-gray-800 flex-1">Пуши от бота про рейтинг города</span>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 data-card bg-white border-l-4 border-l-yellow-400">
+                            <span class="text-sm font-bold text-gray-800 flex-1">Эволюция скинов матрешки</span>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 border border-gray-100 rounded bg-gray-50 mt-4 opacity-50 border-l-4 border-l-gray-300">
+                            <span class="text-sm font-bold text-gray-500 flex-1 line-through">Уникальные скины под каждый город</span>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 border border-gray-100 rounded bg-gray-50 opacity-50 border-l-4 border-l-gray-300">
+                            <span class="text-sm font-bold text-gray-500 flex-1 line-through">Кланы внутри города</span>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 border border-gray-100 rounded bg-gray-50 opacity-50 border-l-4 border-l-gray-300">
+                            <span class="text-sm font-bold text-gray-500 flex-1 line-through">Покупка бустов за деньги</span>
+                        </div>
+                    </div>
+                </div>
+            `,
+            onRender: () => {}
+        },
+        {
+            id: 6,
+            title: "HADI-циклы",
+            content: `
+                <div class="space-y-4">
+                    <p class="text-sm text-gray-600 mb-6">Гипотезы, которые пойдем тестить сразу после запуска.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="data-card p-5 border-l-4 border-black bg-white hover:border-gray-400 transition">
+                            <p class="text-sm font-bold mb-2 text-black">Возврат через пуши</p>
+                            <p class="text-xs text-gray-600 mb-4">Тестим отправку сообщения от бота, если город упал в рейтинге.</p>
+                            <div class="bg-gray-50 p-3 rounded text-[11px] font-mono border border-gray-100">
+                                Ждем рост возвратов пользователей.
+                            </div>
+                        </div>
+
+                        <div class="data-card p-5 border-l-4 border-black bg-white hover:border-gray-400 transition">
+                            <p class="text-sm font-bold mb-2 text-black">Виральность на стартах</p>
+                            <p class="text-xs text-gray-600 mb-4">Насыпаем 5000 тапов и реген энергии за переход по ссылке друга.</p>
+                            <div class="bg-gray-50 p-3 rounded text-[11px] font-mono border border-gray-100">
+                                Смотрим на виральный коэффициент, надо пробить 1.2.
+                            </div>
+                        </div>
+
+                        <div class="data-card p-5 border-l-4 border-gray-300 bg-white hover:border-gray-400 transition">
+                            <p class="text-sm font-bold mb-2 text-black">Удержание через визуал</p>
+                            <p class="text-xs text-gray-600 mb-4">Меняем вид матрешки каждые 100к тапов города.</p>
+                            <div class="bg-gray-50 p-3 rounded text-[11px] font-mono border border-gray-100">
+                                Проверяем рост средней длительности сессии.
+                            </div>
+                        </div>
+
+                        <div class="data-card p-5 border-l-4 border-gray-300 bg-white hover:border-gray-400 transition">
+                            <p class="text-sm font-bold mb-2 text-black">Первые деньги</p>
+                            <p class="text-xs text-gray-600 mb-4">Делаем кнопку х2 тапов на весь город за 50 рублей на 10 минут.</p>
+                            <div class="bg-gray-50 p-3 rounded text-[11px] font-mono border border-gray-100">
+                                Смотрим конверсию в оплату.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            onRender: () => {}
+        }
+    ];
+
+    let activeStage = 1;
+    function renderNav() {
+        const nav = document.getElementById('desktop-nav');
+        const mobile = document.getElementById('mobile-menu');
+        let html = '<ul class="space-y-2">';
+        stagesData.forEach(s => {
+            const activeClass = s.id === activeStage ? 'active bg-gray-100 border-l-2 border-black' : 'text-gray-500 hover:text-black hover:bg-gray-50';
+            html += `
+                <li>
+                    <button onclick="setStage(${s.id})" class="nav-item w-full text-left px-4 py-3 text-xs font-semibold rounded-r transition flex items-center gap-3 ${activeClass}">
+                        <span class="opacity-40 text-[10px] font-mono">0${s.id}</span> 
+                        <span class="truncate">${s.title}</span>
+                    </button>
+                </li>
+            `;
+        });
+        html += '</ul>';
+        if(nav) nav.innerHTML = html;
+        if(mobile) mobile.innerHTML = html;
+    }
+
+    function setStage(id) {
+        activeStage = id;
+        const stage = stagesData.find(s => s.id === id);
+        if(!stage) return;
+        
+        const container = document.getElementById('stage-content');
+        
+        container.innerHTML = `
+            <div class="mb-10">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="text-[10px] font-black tracking-widest uppercase text-gray-400 bg-gray-100 px-2 py-1 rounded">ЭТАП_0${stage.id}</span>
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-black text-black tracking-tight">${stage.title}</h2>
+            </div>
+            <div id="interactive-content" class="animate-in fade-in duration-300">${stage.content}</div>
+        `;
+        
+        renderNav();
+        if(stage.onRender) stage.onRender();
+        document.getElementById('mobile-menu').classList.add('hidden');
+    }
+
+    window.onload = () => {
+        setStage(1);
+        const btn = document.getElementById('mobile-menu-btn');
+        if(btn) {
+            btn.onclick = () => {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            };
+        }
+    };
+</script>
+</body>
+</html>
