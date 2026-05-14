@@ -40,7 +40,36 @@
         
         <nav class="flex-1 overflow-y-auto py-4">
             <ul class="space-y-1 px-3" id="nav-tabs">
-                <!-- ... tabs ... -->
+                <li>
+                    <button onclick="switchTab('concept')" data-target="concept" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md bg-gray-200 text-black font-medium transition-colors text-left">
+                        Суть идеи
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('competitors')" data-target="competitors" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Конкуренты
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('mvp')" data-target="mvp" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Скоуп MVP
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('scenario')" data-target="scenario" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Сценарий
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('architecture')" data-target="architecture" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Архитектура
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('risks')" data-target="risks" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Риски и Запуск
+                    </button>
+                </li>
             </ul>
         </nav>
 
@@ -259,7 +288,7 @@
                         <div class="w-16 h-16 bg-white border border-gray-300 rounded flex items-center justify-center shrink-0 mr-5 text-xs font-medium text-black uppercase tracking-wider">API</div>
                         <div>
                             <h3 class="font-medium text-black mb-1">Backend Services</h3>
-                            <p class="text-sm text-black mb-2">Python + FastAPI</p>
+                            <p class="text-sm text-gray-800 mb-2">Python + FastAPI</p>
                             <p class="text-xs text-gray-600">Асинхронная обработка запросов, валидация токенов, логика мэтчинга.</p>
                         </div>
                     </div>
