@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дейтинг в MAX - MVP Концепция</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #111827;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.2s ease-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Стилизация скроллбара под минимализм */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f9fafb; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+</head>
+<body class="h-screen flex overflow-hidden selection:bg-gray-200">
+
+    <aside class="w-64 bg-gray-50 border-r border-gray-200 flex flex-col h-full z-10 shrink-0">
+        <div class="p-6 border-b border-gray-200">
+            <h1 class="text-lg font-semibold tracking-tight">MAX Dating</h1>
+            <p class="text-xs text-gray-500 mt-1">MVP & Архитектура</p>
+        </div>
+        
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-3" id="nav-tabs">
+                <li>
+                    <button onclick="switchTab('concept')" data-target="concept" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md bg-gray-200 text-black font-medium transition-colors text-left">
+                        Суть идеи
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('competitors')" data-target="competitors" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Конкуренты
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('mvp')" data-target="mvp" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Скоуп MVP
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('scenario')" data-target="scenario" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Сценарий
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('architecture')" data-target="architecture" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Архитектура
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('risks')" data-target="risks" class="tab-btn w-full flex items-center px-3 py-2 text-sm rounded-md text-gray-600 hover:bg-gray-100 hover:text-black transition-colors text-left">
+                        Риски и Запуск
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="flex-1 h-full overflow-y-auto bg-white relative">
+        <div class="max-w-4xl mx-auto p-8 md:p-12 pb-24">
+
+            <section id="concept" class="tab-content active">
+                <h2 class="text-2xl font-semibold mb-8 pb-4 border-b border-gray-200">Концепция продукта</h2>
+                
+                <div class="space-y-8">
+                    <p class="text-gray-700 text-lg leading-relaxed">
+                        Переносим механику быстрых знакомств (свайпы) в экосистему мессенджера MAX в формате Mini App (Web-view).
+                    </p>
+                    
+                    <div class="border border-gray-200 p-6 md:p-8 rounded-lg bg-gray-50">
+                        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-6">Почему MAX</h3>
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="mr-3 font-medium text-gray-400">-</span>
+                                <span>Рынок РФ свободен после ухода Tinder и Badoo.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="mr-3 font-medium text-gray-400">-</span>
+                                <span>В MAX нет доминирующего дейтинг-решения. Забираем аудиторию первыми.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="mr-3 font-medium text-gray-400">-</span>
+                                <span>Не нужно качать отдельное приложение, это снижает стоимость привлечения клиента.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="mr-3 font-medium text-gray-400">-</span>
+                                <span>Авторизация через мессенджер режет количество фейков и ускоряет онбординг.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="competitors" class="tab-content">
+                <h2 class="text-2xl font-semibold mb-8 pb-4 border-b border-gray-200">Конкуренты</h2>
+                
+                <div class="space-y-6">
+                    <div class="border border-gray-200 p-6 rounded-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium">Леонардо Дайвинчик</h3>
+                            <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600 border border-gray-200">Telegram / VK</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">Работает как чат-бот.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="font-medium block mb-1">Плюсы:</span>
+                                <span class="text-gray-600">Огромная база, нулевой порог входа.</span>
+                            </div>
+                            <div>
+                                <span class="font-medium block mb-1">Минусы:</span>
+                                <span class="text-gray-600">Устаревший интерфейс. Много спама и брошенных анкет.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 p-6 rounded-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium">VK Знакомства</h3>
+                            <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600 border border-gray-200">Mini App</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">Нативная интеграция в соцсеть.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="font-medium block mb-1">Плюсы:</span>
+                                <span class="text-gray-600">Хороший UI, готовая база, работает внутри приложения.</span>
+                            </div>
+                            <div>
+                                <span class="font-medium block mb-1">Минусы:</span>
+                                <span class="text-gray-600">Страх смешивать публичную страницу и дейтинг.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 p-6 rounded-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium">Twinby / Pure</h3>
+                            <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600 border border-gray-200">App</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4">Отдельные мобильные приложения.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="font-medium block mb-1">Плюсы:</span>
+                                <span class="text-gray-600">Четкое позиционирование, монетизация.</span>
+                            </div>
+                            <div>
+                                <span class="font-medium block mb-1">Минусы:</span>
+                                <span class="text-gray-600">Сложно заставить скачать. У Twinby тяжелый онбординг с тестами.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mvp" class="tab-content">
+                <h2 class="text-2xl font-semibold mb-8 pb-4 border-b border-gray-200">Границы продукта (MVP)</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-6">Входит в MVP</h3>
+                        <ul class="space-y-4">
+                            <li class="border-l-2 border-black pl-4">
+                                <strong class="block text-gray-900 font-medium">Авторизация через MAX</strong>
+                                <span class="text-sm text-gray-600">Берем ID, Имя, Аватарку. Минимум ручного ввода.</span>
+                            </li>
+                            <li class="border-l-2 border-black pl-4">
+                                <strong class="block text-gray-900 font-medium">Базовый профиль</strong>
+                                <span class="text-sm text-gray-600">До 3 фото, возраст, город, био (до 200 симв).</span>
+                            </li>
+                            <li class="border-l-2 border-black pl-4">
+                                <strong class="block text-gray-900 font-medium">Поиск и Фильтры</strong>
+                                <span class="text-sm text-gray-600">Город, пол, вилка возраста.</span>
+                            </li>
+                            <li class="border-l-2 border-black pl-4">
+                                <strong class="block text-gray-900 font-medium">Оценка</strong>
+                                <span class="text-sm text-gray-600">Свайпы (Лайк / Скип).</span>
+                            </li>
+                            <li class="border-l-2 border-black pl-4">
+                                <strong class="block text-gray-900 font-medium">Мэтч</strong>
+                                <span class="text-sm text-gray-600">Взаимный лайк показывает кнопку "Написать в MAX".</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">Отложено (Не делаем)</h3>
+                        <ul class="space-y-4">
+                            <li class="border-l-2 border-gray-200 pl-4">
+                                <strong class="block text-gray-500 font-medium">Психологические тесты</strong>
+                                <span class="text-sm text-gray-400">Убивает конверсию регистрации.</span>
+                            </li>
+                            <li class="border-l-2 border-gray-200 pl-4">
+                                <strong class="block text-gray-500 font-medium">GPS радар</strong>
+                                <span class="text-sm text-gray-400">Начнем с совпадения по названию города.</span>
+                            </li>
+                            <li class="border-l-2 border-gray-200 pl-4">
+                                <strong class="block text-gray-500 font-medium">Внутренний мессенджер</strong>
+                                <span class="text-sm text-gray-400">Уводим людей общаться напрямую в MAX.</span>
+                            </li>
+                            <li class="border-l-2 border-gray-200 pl-4">
+                                <strong class="block text-gray-500 font-medium">Монетизация</strong>
+                                <span class="text-sm text-gray-400">Суперлайки и премиум оставляем на v2.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="scenario" class="tab-content">
+                <h2 class="text-2xl font-semibold mb-8 pb-4 border-b border-gray-200">Пользовательский путь</h2>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 shrink-0 bg-gray-100 rounded flex items-center justify-center text-sm font-medium mr-4 border border-gray-200">1</div>
+                        <div>
+                            <h3 class="font-medium mb-1">Быстрый вход</h3>
+                            <p class="text-sm text-gray-600">Открывает Mini App. Подтверждает передачу профиля MAX. Авторизация происходит под капотом.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 shrink-0 bg-gray-100 rounded flex items-center justify-center text-sm font-medium mr-4 border border-gray-200">2</div>
+                        <div>
+                            <h3 class="font-medium mb-1">Онбординг</h3>
+                            <p class="text-sm text-gray-600">Добавление фото, ввода города и возраста. Выбор предпочтений. Занимает менее 30 секунд.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 shrink-0 bg-gray-100 rounded flex items-center justify-center text-sm font-medium mr-4 border border-gray-200">3</div>
+                        <div>
+                            <h3 class="font-medium mb-1">Лента</h3>
+                            <p class="text-sm text-gray-600">Свайп вправо (лайк) или влево (пропуск). Анкеты подгружаются заранее для работы без задержек.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="w-8 h-8 shrink-0 bg-black text-white rounded flex items-center justify-center text-sm font-medium mr-4">4</div>
+                        <div>
+                            <h3 class="font-medium mb-1">Мэтч и переход в MAX</h3>
+                            <p class="text-sm text-gray-600">Взаимная симпатия. Кнопка "Написать" генерирует deep-link и открывает диалог в нативном интерфейсе мессенджера.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="architecture" class="tab-content">
+                <h2 class="text-2xl font-semibold mb-8 pb-4 border-b border-gray-200">Архитектура</h2>
+                
+                <p class="mb-8 text-gray-600">Стек выбран для быстрого старта фаундеров. Основной язык бэкенда - Python.</p>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="border border-gray-200 p-5 rounded-lg flex items-start">
+                        <div class="w-16 h-16 bg-gray-50 border border-gray-200 rounded flex items-center justify-center shrink-0 mr-5 text-xs font-medium text-gray-500 uppercase tracking-wider">Client</div>
+                        <div>
+                            <h3 class="font-medium mb-1">Frontend (Mini App)</h3>
+                            <p class="text-sm text-gray-600 mb-2">React.js или Vue.js</p>
+                            <p class="text-xs text-gray-500">Рендерится внутри Web-view MAX. Отвечает за интерфейс и логику свайпов.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center py-2">
+                        <span class="text-gray-300">|</span>
+                    </div>
+
+                    <div class="border border-gray-900 p-5 rounded-lg flex items-start bg-gray-50">
+                        <div class="w-16 h-16 bg-white border border-gray-300 rounded flex items-center justify-center shrink-0 mr-5 text-xs font-medium text-black uppercase tracking-wider">API</div>
+                        <div>
+                            <h3 class="font-medium text-black mb-1">Backend Services</h3>
+                            <p class="text-sm text-black mb-2">Python + FastAPI</p>
+                            <p class="text-xs text-gray-600">Асинхронная обработка запросов, валидация токенов, логика мэтчинга.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center py-2">
+                        <span class="text-gray-300">|</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="border border-gray-200 p-4 rounded-lg text-center bg-white">
+                            <h4 class="font-medium text-sm mb-1">PostgreSQL</h4>
+                            <p class="text-xs text-gray-500">Профили, координаты, история.</p>
+                        </div>
+                        <div class="border border-gray-200 p-4 rounded-lg text-center bg-white">
+                            <h4 class="font-medium text-sm mb-1">Redis</h4>
+                            <p class="text-xs text-gray-500">Кэширование ленты.</p>
+                        </div>
+                        <div class="border border-gray-200 p-4 rounded-lg text-center bg-white">
+                            <h4 class="font-medium text-sm mb-1">S3 Storage</h4>
+                            <p class="text-xs text-gray-500">Хранение фото.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="risks" class="tab-content">
+                <h2 class="text-2xl font-semibold mb-8 pb-4 border-b border-gray-200">Риски и Запуск</h2>
+                
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="font-medium text-lg mb-2">1. Проблема пустого города</h3>
+                        <p class="text-sm text-gray-600 mb-3">Если пользователь зайдет и увидит 2 анкеты, он уйдет навсегда.</p>
+                        <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm text-gray-700">
+                            <strong>Решение:</strong> Запускаемся строго локально. Выбираем один регион (например, Москва). Направляем начальный трафик туда. Открываем новые города по мере набора базы.
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-medium text-lg mb-2">2. Модерация контента</h3>
+                        <p class="text-sm text-gray-600 mb-3">После запуска пользователи начнут загружать непотребный контент и спамить.</p>
+                        <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm text-gray-700">
+                            <strong>Решение:</strong> В MVP внедряем кнопку "Пожаловаться". При накоплении 3 жалоб анкета скрывается до ручной проверки. AI-фильтры оставляем на этап масштабирования.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        function switchTab(tabId) {
+            // Скрываем все вкладки
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Показываем нужную
+            document.getElementById(tabId).classList.add('active');
+            
+            // Обновляем стили кнопок
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.getAttribute('data-target') === tabId) {
+                    btn.classList.add('bg-gray-200', 'text-black', 'font-medium');
+                    btn.classList.remove('text-gray-600', 'hover:bg-gray-100');
+                } else {
+                    btn.classList.remove('bg-gray-200', 'text-black', 'font-medium');
+                    btn.classList.add('text-gray-600', 'hover:bg-gray-100');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
